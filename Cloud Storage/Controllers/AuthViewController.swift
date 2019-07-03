@@ -24,6 +24,21 @@ class AuthViewController: UIViewController {
         self.view.addGestureRecognizer(tap)
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let error = UserDefaults.standard.string(forKey: "error")
+        if let error = error {
+            if error == "401" {
+                showError(message: "доступ к Яндекс.Диску был запрещен из аккаунта")
+            } else {
+                showError(message: "произошла системная ошибка")
+            }
+            UserDefaults.standard.removeObject(forKey: "error")
+        }
+        
+    }
 
     @IBAction func loginButtonTapped(_ sender: Any) {
         
@@ -49,14 +64,18 @@ class AuthViewController: UIViewController {
             } else {
                 message = "произошла системная ошибка"
             }
-            let actionAlertController = UIAlertController(title: "Ошибка входа", message: "Не удалось выполнить вход в аккаунт, потому что \(message). Повторите попытку.", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Понятно", style: .cancel, handler: nil)
-            actionAlertController.addAction(action)
-            DispatchQueue.main.async {
-                self.present(actionAlertController, animated: true, completion: nil)
-            }
+            self.showError(message: message)
         }
         
+    }
+    
+    func showError( message: String){
+        let actionAlertController = UIAlertController(title: "Ошибка авторизации", message: "Не удалось выполнить вход в аккаунт, потому что \(message). Повторите попытку.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Понятно", style: .cancel, handler: nil)
+        actionAlertController.addAction(action)
+        DispatchQueue.main.async {
+            self.present(actionAlertController, animated: true, completion: nil)
+        }
     }
     
 }

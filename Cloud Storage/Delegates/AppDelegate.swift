@@ -8,16 +8,22 @@
 
 import UIKit
 import OAuthSwift
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var splashDelay = false
+    var manager: NetworkReachabilityManager?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        manager = Connectivity.configureConnectionListener()
+        manager?.startListening()
+        
         return true
     }
     
@@ -28,10 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         OAuthSwift.handle(url: url)
         return true
     }
-    
-//    func applicationHandle(url: URL) {
-//        OAuthSwift.handle(url: url)
-//    }
+
     
 }
 

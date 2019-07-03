@@ -14,8 +14,12 @@
 		CF7BCFDD22CA3FAE00EE99E6 /* YandexClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7BCFDC22CA3FAE00EE99E6 /* YandexClient.swift */; };
 		CF8EB16222CA1F0F004452E7 /* ResourcesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8EB16122CA1F0F004452E7 /* ResourcesCollectionViewController.swift */; };
 		CF8EB16422CA27B0004452E7 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8EB16322CA27B0004452E7 /* SplashViewController.swift */; };
+		CF9E0B1B22CC2A2500CCDA0D /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9E0B1A22CC2A2500CCDA0D /* Resource.swift */; };
+		CF9E0B1D22CC2A3C00CCDA0D /* ResourceFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9E0B1C22CC2A3C00CCDA0D /* ResourceFunctions.swift */; };
 		CFC6179822CA5BAC00EC3920 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC6179722CA5BAC00EC3920 /* User.swift */; };
 		CFC6179A22CA6B2F00EC3920 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC6179922CA6B2F00EC3920 /* SettingsTableViewController.swift */; };
+		CFDAC76522CD3FD9004D2221 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDAC76422CD3FD9004D2221 /* Connectivity.swift */; };
+		CFE49CC822CCC7AE00105D77 /* ResourceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE49CC722CCC7AE00105D77 /* ResourceCollectionViewCell.swift */; };
 		CFEE4DFA22C8D3D0002A240D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEE4DF922C8D3D0002A240D /* AppDelegate.swift */; };
 		CFEE4DFC22C8D3D0002A240D /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEE4DFB22C8D3D0002A240D /* AuthViewController.swift */; };
 		CFEE4DFF22C8D3D0002A240D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFEE4DFD22C8D3D0002A240D /* Main.storyboard */; };
@@ -32,8 +36,12 @@
 		CF7BCFDC22CA3FAE00EE99E6 /* YandexClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexClient.swift; sourceTree = "<group>"; };
 		CF8EB16122CA1F0F004452E7 /* ResourcesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesCollectionViewController.swift; sourceTree = "<group>"; };
 		CF8EB16322CA27B0004452E7 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		CF9E0B1A22CC2A2500CCDA0D /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
+		CF9E0B1C22CC2A3C00CCDA0D /* ResourceFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceFunctions.swift; sourceTree = "<group>"; };
 		CFC6179722CA5BAC00EC3920 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CFC6179922CA6B2F00EC3920 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		CFDAC76422CD3FD9004D2221 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
+		CFE49CC722CCC7AE00105D77 /* ResourceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCollectionViewCell.swift; sourceTree = "<group>"; };
 		CFEE4DF622C8D3D0002A240D /* Cloud Storage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cloud Storage.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFEE4DF922C8D3D0002A240D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CFEE4DFB22C8D3D0002A240D /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
@@ -84,10 +92,20 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		CF78BB2122CD3FA900102120 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CFDAC76422CD3FD9004D2221 /* Connectivity.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		CF7BCFDE22CA572600EE99E6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				CFC6179722CA5BAC00EC3920 /* User.swift */,
+				CF9E0B1A22CC2A2500CCDA0D /* Resource.swift */,
+				CF9E0B1C22CC2A3C00CCDA0D /* ResourceFunctions.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -125,6 +143,7 @@
 				CF8EB16522CA3F70004452E7 /* API */,
 				CF5E070122CBBE4000426C7B /* Controllers */,
 				CF5E070022CBBE0000426C7B /* Delegates */,
+				CF78BB2122CD3FA900102120 /* Helpers */,
 				CF7BCFDE22CA572600EE99E6 /* Model */,
 				CFEE4E0D22CA0D99002A240D /* Views */,
 			);
@@ -137,6 +156,7 @@
 				CFEE4DFD22C8D3D0002A240D /* Main.storyboard */,
 				CF5E070422CC15AC00426C7B /* LaunchScreen.storyboard */,
 				CFEE4E0022C8D3D1002A240D /* Assets.xcassets */,
+				CFE49CC722CCC7AE00105D77 /* ResourceCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -231,6 +251,7 @@
 				"${BUILT_PRODUCTS_DIR}/OAuthSwift/OAuthSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
@@ -240,6 +261,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OAuthSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -278,12 +300,16 @@
 				CF23FB9F22CAA662004B2434 /* TabBarViewController.swift in Sources */,
 				CF5E070322CBBE8D00426C7B /* YandexLoginDelegate.swift in Sources */,
 				CF8EB16222CA1F0F004452E7 /* ResourcesCollectionViewController.swift in Sources */,
+				CF9E0B1B22CC2A2500CCDA0D /* Resource.swift in Sources */,
+				CFE49CC822CCC7AE00105D77 /* ResourceCollectionViewCell.swift in Sources */,
 				CFEE4DFC22C8D3D0002A240D /* AuthViewController.swift in Sources */,
 				CF7BCFDD22CA3FAE00EE99E6 /* YandexClient.swift in Sources */,
 				CFEE4DFA22C8D3D0002A240D /* AppDelegate.swift in Sources */,
 				CF8EB16422CA27B0004452E7 /* SplashViewController.swift in Sources */,
 				CFC6179822CA5BAC00EC3920 /* User.swift in Sources */,
+				CFDAC76522CD3FD9004D2221 /* Connectivity.swift in Sources */,
 				CFC6179A22CA6B2F00EC3920 /* SettingsTableViewController.swift in Sources */,
+				CF9E0B1D22CC2A3C00CCDA0D /* ResourceFunctions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -27,6 +27,11 @@ class SettingsTableViewController: UITableViewController {
         let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
         let logoutAction = UIAlertAction(title: "Выйти", style: .destructive) { (action) in
+            
+            let tabBarController = self.tabBarController?.viewControllers![0] as! UINavigationController
+            let firstTab = tabBarController.topViewController as! ResourcesCollectionViewController
+            firstTab.notificationToken?.invalidate()
+            ResourceFunctions.shared.deleteAll()
             YandexClient.shared.logout()
         }
         actionSheetController.addAction(cancelAction)

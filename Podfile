@@ -9,5 +9,6 @@ target 'Cloud Storage' do
   pod 'OAuthSwift'
   pod 'Alamofire'
   pod 'RealmSwift'
+  pod 'SwiftyJSON'
 
 end

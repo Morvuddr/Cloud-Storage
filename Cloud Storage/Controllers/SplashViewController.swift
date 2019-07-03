@@ -32,7 +32,19 @@ class SplashViewController: UIViewController, YandexLoginDelegate {
         if User.currentUser == nil {
             showAuthViewController()
         } else {
-            showApp()
+            if Connectivity.isConnectedToInternet {
+                ResourceFunctions.shared.deleteAll()
+                YandexClient.shared.downloadMetaInfo(at: "/", for: nil, downloadSuccess: {
+                    self.showApp()
+                }) { (error) in
+                    User.currentUser = nil
+                    ResourceFunctions.shared.deleteAll()
+                    UserDefaults.standard.set(error, forKey: "error")
+                    self.continueLogin()
+                }
+            } else {
+                showApp()
+            }
         }
     }
     
@@ -41,12 +53,6 @@ class SplashViewController: UIViewController, YandexLoginDelegate {
     }
     
     func showApp(){
-//        let mainStoryboard = UIStoryboard(name: "AuthViewController", bundle: Bundle.main)
-//        guard let destinationViewController = mainStoryboard.instantiateViewController(withIdentifier: "App") as? UITabBarController else {
-//            return
-//        }
-//        destinationViewController.modalTransitionStyle = .crossDissolve
-//        present(destinationViewController, animated: true, completion: nil)
         self.performSegue(withIdentifier: "showApp", sender: self)
     }
 

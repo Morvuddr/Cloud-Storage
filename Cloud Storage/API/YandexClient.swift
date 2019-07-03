@@ -8,6 +8,8 @@
 
 import Foundation
 import OAuthSwift
+import Alamofire
+import SwiftyJSON
 
 class YandexClient {
     
@@ -41,7 +43,6 @@ class YandexClient {
             (credential, response, parameters) in
             User.currentUser = User(userName: userName, accessToken: credential.oauthToken)
             self.loginSuccess?(false)
-            //self.delegate?.continueLogin()
         }, failure: { (error) in
             self.loginFailure?(error)
         })
@@ -52,4 +53,62 @@ class YandexClient {
         User.currentUser = nil
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: User.userDidLogoutNotification), object: nil)
     }
+    
+    func downloadMetaInfo(at path: String, for parent: Resource?, downloadSuccess: @escaping ()->(), downloadFailure: ((String)->())? = nil){
+        let URL = "https://cloud-api.yandex.net/v1/disk/resources"
+        request(URL , method: .get,
+                parameters: ["path" : path],
+                headers: ["Authorization" : User.currentUser!.accessToken!])
+            .validate()
+            .responseJSON { (response) in
+                switch response.result {
+                case .success(let value):
+                    
+                    let json = JSON(value)
+                    var parent = parent
+                    if parent == nil {
+                        let name = json["name"].stringValue
+                        let path = json["path"].stringValue
+                        let type = json["type"].stringValue
+                        let mimeType = json["mime_type"].stringValue
+                        let size = json["size"].intValue
+                        let created = json["created"].stringValue
+                        let modified = json["modified"].stringValue
+                        let resource = Resource(name: name, path: path, type: type, mimeType: mimeType, size: size, created: created, modified: modified, parent: parent)
+                        ResourceFunctions.shared.createResource(resource: resource, parent: nil)
+                        parent = resource
+                    }
+                    
+                    let childrenCount = json["_embedded"]["total"].intValue
+                    if childrenCount != 0 {
+                        let children  = json["_embedded"]["items"]
+                        for (_,subJson):(String, JSON) in children {
+                            let name = subJson["name"].stringValue
+                            let path = subJson["path"].stringValue
+                            let type = subJson["type"].stringValue
+                            let mimeType = subJson["mime_Type"].stringValue
+                            let size = subJson["size"].intValue
+                            let created = subJson["created"].stringValue
+                            let modified = subJson["modified"].stringValue
+                            
+                            let subResource = Resource(name: name, path: path, type: type, mimeType: mimeType, size: size, created: created, modified: modified, parent: parent)
+                            ResourceFunctions.shared.createResource(resource: subResource, parent: parent)
+                        }
+                    }
+                    downloadSuccess()
+                    
+                case .failure(let error):
+                    print(error)
+                    if let downloadFailure = downloadFailure {
+                        if error.localizedDescription.contains("401") {
+                            downloadFailure("401")
+                        } else {
+                            downloadFailure("other")
+                        }
+                        
+                    }
+                }
+        }
+    }
+    
 }

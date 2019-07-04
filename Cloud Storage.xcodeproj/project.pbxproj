@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		C3EF0957B8A697C16EBBA355 /* Pods_Cloud_Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A0C0C304169FF51A58711A4 /* Pods_Cloud_Storage.framework */; };
 		CF23FB9F22CAA662004B2434 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF23FB9E22CAA662004B2434 /* TabBarViewController.swift */; };
+		CF3193C722CDF00B009C5BF0 /* ResourcePropertiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3193C622CDF00B009C5BF0 /* ResourcePropertiesViewController.swift */; };
+		CF3193C922CDF821009C5BF0 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3193C822CDF821009C5BF0 /* UIViewControllerExtension.swift */; };
 		CF5E070322CBBE8D00426C7B /* YandexLoginDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF5E070222CBBE8D00426C7B /* YandexLoginDelegate.swift */; };
 		CF5E070522CC15AC00426C7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF5E070422CC15AC00426C7B /* LaunchScreen.storyboard */; };
 		CF7BCFDD22CA3FAE00EE99E6 /* YandexClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7BCFDC22CA3FAE00EE99E6 /* YandexClient.swift */; };
@@ -31,6 +33,8 @@
 		7B2C1729F7F43BC2854D05B0 /* Pods-Cloud Storage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cloud Storage.debug.xcconfig"; path = "Target Support Files/Pods-Cloud Storage/Pods-Cloud Storage.debug.xcconfig"; sourceTree = "<group>"; };
 		B72E97F0767627BA26FB6139 /* Pods-Cloud Storage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cloud Storage.release.xcconfig"; path = "Target Support Files/Pods-Cloud Storage/Pods-Cloud Storage.release.xcconfig"; sourceTree = "<group>"; };
 		CF23FB9E22CAA662004B2434 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		CF3193C622CDF00B009C5BF0 /* ResourcePropertiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcePropertiesViewController.swift; sourceTree = "<group>"; };
+		CF3193C822CDF821009C5BF0 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		CF5E070222CBBE8D00426C7B /* YandexLoginDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexLoginDelegate.swift; sourceTree = "<group>"; };
 		CF5E070422CC15AC00426C7B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CF7BCFDC22CA3FAE00EE99E6 /* YandexClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexClient.swift; sourceTree = "<group>"; };
@@ -88,6 +92,7 @@
 				CF23FB9E22CAA662004B2434 /* TabBarViewController.swift */,
 				CFC6179922CA6B2F00EC3920 /* SettingsTableViewController.swift */,
 				CF8EB16122CA1F0F004452E7 /* ResourcesCollectionViewController.swift */,
+				CF3193C622CDF00B009C5BF0 /* ResourcePropertiesViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -96,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				CFDAC76422CD3FD9004D2221 /* Connectivity.swift */,
+				CF3193C822CDF821009C5BF0 /* UIViewControllerExtension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -298,6 +304,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF23FB9F22CAA662004B2434 /* TabBarViewController.swift in Sources */,
+				CF3193C722CDF00B009C5BF0 /* ResourcePropertiesViewController.swift in Sources */,
+				CF3193C922CDF821009C5BF0 /* UIViewControllerExtension.swift in Sources */,
 				CF5E070322CBBE8D00426C7B /* YandexLoginDelegate.swift in Sources */,
 				CF8EB16222CA1F0F004452E7 /* ResourcesCollectionViewController.swift in Sources */,
 				CF9E0B1B22CC2A2500CCDA0D /* Resource.swift in Sources */,

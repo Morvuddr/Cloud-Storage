@@ -26,9 +26,9 @@ class ResourceFunctions {
             
             try realm.write{
                 realm.add(resource)
-                print("Добавлен ресурс \(resource.name)")
+                //print("Добавлен ресурс \(resource.name)")
                 if let parent = parent {
-                    print("Ресурсу \(parent.name) добавлен ресурс \(resource.name)")
+                    //print("Ресурсу \(parent.name) добавлен ресурс \(resource.name)")
                     parent.children.append(resource)
                 }
             }
@@ -42,7 +42,7 @@ class ResourceFunctions {
     func deleteAll(){
         do {
             try realm.write{
-                print("Удаление всех объектов")
+                //print("Удаление всех объектов")
                 realm.deleteAll()
             }
         } catch {
@@ -60,7 +60,7 @@ class ResourceFunctions {
             do {
                 try realm.write {
                     realm.delete(resource.children)
-                    print("Удаление завершено для \(resource.name)")
+                    //print("Удаление завершено для \(resource.name)")
                 }
             } catch {
                 print(error)

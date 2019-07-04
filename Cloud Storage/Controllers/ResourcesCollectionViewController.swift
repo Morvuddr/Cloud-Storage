@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 import Alamofire
 
-class ResourcesCollectionViewController: UIViewController {
+class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var backButton: UIBarButtonItem!
@@ -29,7 +29,7 @@ class ResourcesCollectionViewController: UIViewController {
         configureConnectionObserver()
         configureResourcesCollectionViewController()
         configureErrorView()
-        
+        configureLongPressGestureRecognizer()
     }
     
     func configureResourcesCollectionViewController(){
@@ -150,6 +150,51 @@ class ResourcesCollectionViewController: UIViewController {
             self.configureNotificationToken()
         }
     }
+    
+    func configureLongPressGestureRecognizer(){
+        let longPressGR = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(longPressGR:)))
+        longPressGR.minimumPressDuration = 0.3
+        longPressGR.delegate = self
+        longPressGR.delaysTouchesBegan = true
+        self.collectionView.addGestureRecognizer(longPressGR)
+    }
+    
+    @objc func handleLongPress(longPressGR: UILongPressGestureRecognizer) {
+        if longPressGR.state != .began {
+            return
+        }
+        
+        let point = longPressGR.location(in: self.collectionView)
+        let indexPath = self.collectionView.indexPathForItem(at: point)
+        
+        if let indexPath = indexPath {
+            let cell = self.collectionView.cellForItem(at: indexPath) as! ResourceCollectionViewCell
+            let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+            let downloadAction = UIAlertAction(title: "Скачать", style: .default) { (action) in
+                //TODO Download file
+            }
+            let cutAction = UIAlertAction(title: "Вырезать", style: .default) { (action) in
+                //TODO Cut file
+            }
+            let showPropertiesAction = UIAlertAction(title: "Свойства", style: .default) { (action) in
+                let vc = ResourcePropertiesViewController.getInstance() as! ResourcePropertiesViewController
+                vc.resource = cell.resource
+                self.tabBarController?.present(vc, animated: true, completion: nil)
+            }
+            if cell.resource?.type == "file"{
+                actionSheetController.addAction(downloadAction)
+            }
+            actionSheetController.addAction(cutAction)
+            actionSheetController.addAction(showPropertiesAction)
+            actionSheetController.addAction(cancelAction)
+            actionSheetController.view.tintColor = UIColor.black
+            self.present(actionSheetController, animated: true, completion: nil)
+        } else {
+            print("Could not find index path")
+        }
+    }
+    
 }
 
 extension ResourcesCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {

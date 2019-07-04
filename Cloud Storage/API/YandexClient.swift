@@ -86,7 +86,7 @@ class YandexClient {
                             let name = subJson["name"].stringValue
                             let path = subJson["path"].stringValue
                             let type = subJson["type"].stringValue
-                            let mimeType = subJson["mime_Type"].stringValue
+                            let mimeType = subJson["mime_type"].stringValue
                             let size = subJson["size"].intValue
                             let created = subJson["created"].stringValue
                             let modified = subJson["modified"].stringValue

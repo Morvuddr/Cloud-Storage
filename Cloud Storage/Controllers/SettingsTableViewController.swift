@@ -36,6 +36,7 @@ class SettingsTableViewController: UITableViewController {
         }
         actionSheetController.addAction(cancelAction)
         actionSheetController.addAction(logoutAction)
+        actionSheetController.view.tintColor = UIColor.black
         self.present(actionSheetController, animated: true, completion: nil)
     }
     

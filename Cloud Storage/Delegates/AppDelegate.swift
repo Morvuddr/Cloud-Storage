@@ -43,3 +43,17 @@ func delay(_ delay:Double, closure:@escaping ()->()) {
     DispatchQueue.main.asyncAfter(deadline: when, execute: closure)
 }
 
+func createDate(from oldDate: String) -> String {
+    let dateFormatter = ISO8601DateFormatter()
+    //dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss ZZ"
+    // yyyy-MM-ddThh:mm:ssZZ
+    dateFormatter.timeZone = TimeZone.current
+    guard let date = dateFormatter.date(from: oldDate) else{
+        fatalError("ERROR: Date conversion failed due to mismatched format.")
+    }
+    // New format for a date
+    let newDateFormatter = DateFormatter()
+    newDateFormatter.dateFormat = "dd MMMM yyyy HH:mm"
+    newDateFormatter.locale = Locale(identifier: "ru_RU")
+    return newDateFormatter.string(from: date)
+}

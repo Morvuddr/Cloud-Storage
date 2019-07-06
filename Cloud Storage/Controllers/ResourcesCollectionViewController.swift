@@ -51,10 +51,10 @@ class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDe
                 
                 collectionView.reloadData()
                 
-            case .update(_, _, let insertions, _):
-                
-                collectionView.insertItems(at: insertions.map({ IndexPath(row: $0, section: 0) }))
+            case .update(_, _, let insertions,_):
 
+                self!.collectionView.insertItems(at: insertions.map({ IndexPath(row: $0, section: 0) }))
+                
             case .error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
                 fatalError("\(error)")
@@ -103,16 +103,13 @@ class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDe
             if Connectivity.isConnectedToInternet {
                 DispatchQueue.main.async {
                     self.configureErrorView()
-                    let actionAlertController = UIAlertController(title: "Соединение восстановлено", message: "Вы будете перенаправлены в корневую папку.", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "Понятно", style: .cancel, handler: { action in
+                    self.showAlert(title: "Соединение восстановлено", message: "Вы будете перенаправлены в корневую папку.", handler: { action in
                         self.notificationToken?.invalidate()
                         ResourceFunctions.shared.deleteAll()
                         YandexClient.shared.downloadMetaInfo(at: "/", for: nil, downloadSuccess: {
                             self.configureResourcesCollectionViewController()
                         }, downloadFailure: nil)
                     })
-                    actionAlertController.addAction(action)
-                    self.present(actionAlertController, animated: true, completion: nil)
                 }
             } else {
                 DispatchQueue.main.async {
@@ -197,6 +194,36 @@ class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDe
         } else {
             print("Could not find index path")
         }
+    }
+    
+    @IBAction func addBarItemTapped(_ sender: Any) {
+        if Connectivity.isConnectedToInternet{
+            let vc = AddResourceViewController.getInstance() as! AddResourceViewController
+            vc.resource = currentResource
+            vc.completion = { (resource, newResourceName) in
+                let check = resource.children.first(where: { (resource) -> Bool in
+                    if resource.name == newResourceName {
+                        return true
+                    }
+                    return false
+                })
+                if check == nil {
+                    YandexClient.shared.createResource(currentResource: resource, newResourceName: newResourceName)
+                } else {
+                    self.showAlert(title: "Ошибка создания новой папки", message: "Папка с именем \(newResourceName) уже существует.", handler: nil)
+                }
+            }
+            self.tabBarController?.present(vc, animated: true, completion: nil)
+        } else {
+            showAlert(title: "Отсутствует соединение", message: "Проверьте ваше интернет-соединение и повторите попытку.", handler: nil)
+        }
+    }
+    
+    func showAlert(title: String, message: String, handler: ((UIAlertAction)->())?){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Понятно", style: .cancel, handler: handler)
+        alert.addAction(action)
+        self.tabBarController?.present(alert, animated: true, completion: nil)
     }
     
 }

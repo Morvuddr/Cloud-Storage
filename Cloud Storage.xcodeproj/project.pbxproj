@@ -21,6 +21,7 @@
 		CFC6179822CA5BAC00EC3920 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC6179722CA5BAC00EC3920 /* User.swift */; };
 		CFC6179A22CA6B2F00EC3920 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC6179922CA6B2F00EC3920 /* SettingsTableViewController.swift */; };
 		CFDAC76522CD3FD9004D2221 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDAC76422CD3FD9004D2221 /* Connectivity.swift */; };
+		CFE3752B22D0DDC6009046DF /* AddResourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE3752A22D0DDC6009046DF /* AddResourceViewController.swift */; };
 		CFE49CC822CCC7AE00105D77 /* ResourceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE49CC722CCC7AE00105D77 /* ResourceCollectionViewCell.swift */; };
 		CFEE4DFA22C8D3D0002A240D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEE4DF922C8D3D0002A240D /* AppDelegate.swift */; };
 		CFEE4DFC22C8D3D0002A240D /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEE4DFB22C8D3D0002A240D /* AuthViewController.swift */; };
@@ -45,6 +46,7 @@
 		CFC6179722CA5BAC00EC3920 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CFC6179922CA6B2F00EC3920 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		CFDAC76422CD3FD9004D2221 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
+		CFE3752A22D0DDC6009046DF /* AddResourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddResourceViewController.swift; sourceTree = "<group>"; };
 		CFE49CC722CCC7AE00105D77 /* ResourceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCollectionViewCell.swift; sourceTree = "<group>"; };
 		CFEE4DF622C8D3D0002A240D /* Cloud Storage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cloud Storage.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFEE4DF922C8D3D0002A240D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				CFC6179922CA6B2F00EC3920 /* SettingsTableViewController.swift */,
 				CF8EB16122CA1F0F004452E7 /* ResourcesCollectionViewController.swift */,
 				CF3193C622CDF00B009C5BF0 /* ResourcePropertiesViewController.swift */,
+				CFE3752A22D0DDC6009046DF /* AddResourceViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				CFEE4DFC22C8D3D0002A240D /* AuthViewController.swift in Sources */,
 				CF7BCFDD22CA3FAE00EE99E6 /* YandexClient.swift in Sources */,
 				CFEE4DFA22C8D3D0002A240D /* AppDelegate.swift in Sources */,
+				CFE3752B22D0DDC6009046DF /* AddResourceViewController.swift in Sources */,
 				CF8EB16422CA27B0004452E7 /* SplashViewController.swift in Sources */,
 				CFC6179822CA5BAC00EC3920 /* User.swift in Sources */,
 				CFDAC76522CD3FD9004D2221 /* Connectivity.swift in Sources */,

@@ -28,7 +28,9 @@ class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDe
         
         configureConnectionObserver()
         configureResourcesCollectionViewController()
-        configureErrorView()
+        if !Connectivity.isConnectedToInternet {
+            configureErrorView()
+        }
         configureLongPressGestureRecognizer()
     }
     
@@ -84,12 +86,14 @@ class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDe
 
     func configureErrorView(){
         if Connectivity.isConnectedToInternet {
-            UIView.animate(withDuration: 1.0, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 self.errorViewTopConstraint.constant = -44
+                self.view.layoutIfNeeded()
             })
         } else {
-            UIView.animate(withDuration: 1.0, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 self.errorViewTopConstraint.constant = 0
+                self.view.layoutIfNeeded()
             })
         }
     }

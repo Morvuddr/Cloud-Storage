@@ -23,6 +23,8 @@ class AuthViewController: UIViewController {
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
         
+        userNameTextField.delegate = self
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -78,4 +80,15 @@ class AuthViewController: UIViewController {
         }
     }
     
+}
+
+extension AuthViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        var char = string
+        let code = char.unicodeScalars.first?.value
+        if (code == 32) || (code == 10){
+            return false
+        }
+        return true
+    }
 }

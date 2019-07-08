@@ -138,4 +138,49 @@ class YandexClient {
         }
     }
     
+    
+    func downloadResource(path: String, fileName: String, completion: @escaping (URL)->()){
+        let URL = "https://cloud-api.yandex.net/v1/disk/resources/download"
+        request(URL , method: .get,
+                parameters: ["path" : path], encoding: URLEncoding.queryString,
+                headers: ["Authorization" : User.currentUser!.accessToken!])
+            .validate()
+            .responseJSON { (response) in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+                    let urlToDownload = json["href"].stringValue
+                    self.beginDownload(url: urlToDownload, fileName: fileName){ (fileURL) in
+                        completion(fileURL)
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+        }
+    }
+    
+    func beginDownload(url: String, fileName: String, completion: @escaping (URL)->()){
+        request(url , method: .get,
+                headers: ["Authorization" : User.currentUser!.accessToken!])
+            .validate()
+            .downloadProgress { progress in
+                //print("totalUnitCount:\n", progress.totalUnitCount)
+                //print("completedUnitCount:\n", progress.completedUnitCount)
+                //print("fractionCompleted:\n", progress.fractionCompleted)
+                //print("localizedDescription:\n", progress.localizedDescription!)
+                //print("---------------------------------------------")
+            }
+            .response { (response) in
+                if let data = response.data {
+                    let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                    let fileURL = documentsURL.appendingPathComponent(fileName)
+                    do {
+                        try data.write(to: fileURL)
+                    } catch {
+                        print("Something went wrong!")
+                    }
+                    completion(fileURL)
+                }
+        }
+    }
 }

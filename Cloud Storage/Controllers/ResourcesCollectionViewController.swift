@@ -175,16 +175,18 @@ class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDe
             let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
             let downloadAction = UIAlertAction(title: "Скачать", style: .default) { (action) in
-                //TODO Download file
+                self.downloadResource(resourceName: cell.resource!.name, resourcePath: cell.resource!.path)
             }
             let cutAction = UIAlertAction(title: "Вырезать", style: .default) { (action) in
                 //TODO Cut file
             }
             let showPropertiesAction = UIAlertAction(title: "Свойства", style: .default) { (action) in
+                // Show resource properties
                 let vc = ResourcePropertiesViewController.getInstance() as! ResourcePropertiesViewController
                 vc.resource = cell.resource
                 self.tabBarController?.present(vc, animated: true, completion: nil)
             }
+            
             if cell.resource?.type == "file"{
                 actionSheetController.addAction(downloadAction)
             }
@@ -192,7 +194,10 @@ class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDe
             actionSheetController.addAction(showPropertiesAction)
             actionSheetController.addAction(cancelAction)
             actionSheetController.view.tintColor = UIColor.black
-            self.present(actionSheetController, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self.present(actionSheetController, animated: true, completion: nil)
+            }
+            
         } else {
             print("Could not find index path")
         }
@@ -233,6 +238,30 @@ class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDe
             let vc = LoadingViewController.getInstance() as! LoadingViewController
             vc.reason = reason
             self.tabBarController?.present(vc, animated: true, completion: nil)
+        }
+    }
+    
+    func downloadResource(resourceName: String, resourcePath: String) {
+        //Download file
+        YandexClient.shared.downloadResource(path: resourcePath, fileName: resourceName){ fileURL in
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ProcessCompleted"), object: nil)
+            let activityVC = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
+            activityVC.excludedActivityTypes = [.airDrop, .postToTwitter, .markupAsPDF, .mail, .message, .postToVimeo, .openInIBooks, .postToFacebook, .copyToPasteboard, .addToReadingList, .assignToContact, .print]
+            activityVC.accessibilityLanguage = "ru"
+            activityVC.completionWithItemsHandler = { (activityType, completed, returnedItems, activityError) in
+                do {
+                    try FileManager.default.removeItem(at: fileURL)
+                } catch (let error) {
+                    print(error)
+                }
+            }
+            DispatchQueue.main.async {
+                self.tabBarController?.present(activityVC, animated: true, completion: nil)
+            }
+        }
+        
+        DispatchQueue.main.async {
+            self.showLoadingView(reason: "Загрузка файла \"\(resourceName)\"...")
         }
     }
     

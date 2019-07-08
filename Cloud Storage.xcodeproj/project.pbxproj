@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C3EF0957B8A697C16EBBA355 /* Pods_Cloud_Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A0C0C304169FF51A58711A4 /* Pods_Cloud_Storage.framework */; };
+		CF13845322D36FD50002B1DB /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF13845222D36FD50002B1DB /* LoadingViewController.swift */; };
 		CF23FB9F22CAA662004B2434 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF23FB9E22CAA662004B2434 /* TabBarViewController.swift */; };
 		CF3193C722CDF00B009C5BF0 /* ResourcePropertiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3193C622CDF00B009C5BF0 /* ResourcePropertiesViewController.swift */; };
 		CF3193C922CDF821009C5BF0 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3193C822CDF821009C5BF0 /* UIViewControllerExtension.swift */; };
@@ -33,6 +34,7 @@
 		0A0C0C304169FF51A58711A4 /* Pods_Cloud_Storage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cloud_Storage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B2C1729F7F43BC2854D05B0 /* Pods-Cloud Storage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cloud Storage.debug.xcconfig"; path = "Target Support Files/Pods-Cloud Storage/Pods-Cloud Storage.debug.xcconfig"; sourceTree = "<group>"; };
 		B72E97F0767627BA26FB6139 /* Pods-Cloud Storage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cloud Storage.release.xcconfig"; path = "Target Support Files/Pods-Cloud Storage/Pods-Cloud Storage.release.xcconfig"; sourceTree = "<group>"; };
+		CF13845222D36FD50002B1DB /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		CF23FB9E22CAA662004B2434 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		CF3193C622CDF00B009C5BF0 /* ResourcePropertiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcePropertiesViewController.swift; sourceTree = "<group>"; };
 		CF3193C822CDF821009C5BF0 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				CF8EB16122CA1F0F004452E7 /* ResourcesCollectionViewController.swift */,
 				CF3193C622CDF00B009C5BF0 /* ResourcePropertiesViewController.swift */,
 				CFE3752A22D0DDC6009046DF /* AddResourceViewController.swift */,
+				CF13845222D36FD50002B1DB /* LoadingViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 			files = (
 				CF23FB9F22CAA662004B2434 /* TabBarViewController.swift in Sources */,
 				CF3193C722CDF00B009C5BF0 /* ResourcePropertiesViewController.swift in Sources */,
+				CF13845322D36FD50002B1DB /* LoadingViewController.swift in Sources */,
 				CF3193C922CDF821009C5BF0 /* UIViewControllerExtension.swift in Sources */,
 				CF5E070322CBBE8D00426C7B /* YandexLoginDelegate.swift in Sources */,
 				CF8EB16222CA1F0F004452E7 /* ResourcesCollectionViewController.swift in Sources */,

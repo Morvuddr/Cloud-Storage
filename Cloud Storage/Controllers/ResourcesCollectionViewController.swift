@@ -122,12 +122,14 @@ class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDe
     
     func downloadMetaInfoForChildren(){
         if Connectivity.isConnectedToInternet{
-            for child in currentResource!.children {
-                if child.type == "dir"{
-                    YandexClient.shared.downloadMetaInfo(at: child.path, for: child, downloadSuccess: {
-                        // nothing
-                    }, downloadFailure: nil)
-                }
+            for child in currentResource!.children.filter({$0.type == "dir"}) {
+                YandexClient.shared.downloadMetaInfo(at: child.path, for: child, downloadSuccess: {
+                    let currentIndex = self.currentResource!.children.index(of: child)
+                    let lastIndex = self.currentResource!.children.filter({$0.type == "dir"}).count-1
+                    if currentIndex == lastIndex {
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ProcessCompleted"), object: nil)
+                    }
+                }, downloadFailure: nil)
             }
         }
     }
@@ -226,6 +228,14 @@ class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDe
         self.tabBarController?.present(alert, animated: true, completion: nil)
     }
     
+    func showLoadingView(reason: String){
+        if Connectivity.isConnectedToInternet {
+            let vc = LoadingViewController.getInstance() as! LoadingViewController
+            vc.reason = reason
+            self.tabBarController?.present(vc, animated: true, completion: nil)
+        }
+    }
+    
 }
 
 extension ResourcesCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -249,10 +259,12 @@ extension ResourcesCollectionViewController: UICollectionViewDelegate, UICollect
             configureNavBarTitle()
             DispatchQueue.main.async {
                 self.configureNotificationToken()
-                self.deleteChildren(for: self.currentResource!, completion: {
-                    self.downloadMetaInfoForChildren()
-                })
-                
+                if (self.currentResource!.children.filter({$0.type == "dir"}).count) > 0 {
+                    self.deleteChildren(for: self.currentResource!, completion: {
+                        self.downloadMetaInfoForChildren()
+                    })
+                    self.showLoadingView(reason: "Загрузка данных...")
+                }
             }
         } else {
             return

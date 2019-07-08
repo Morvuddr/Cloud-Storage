@@ -348,6 +348,57 @@
             </objects>
             <point key="canvasLocation" x="2688.8000000000002" y="-653.52323838080963"/>
         </scene>
+        <!--Loading View Controller-->
+        <scene sceneID="srJ-cY-YVU">
+            <objects>
+                <viewController storyboardIdentifier="LoadingViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="Gdg-7U-SYa" customClass="LoadingViewController" customModule="Cloud_Storage" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nAd-Ne-Sga">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="URg-Sh-eMp">
+                                <rect key="frame" x="97.5" y="288.5" width="180" height="90"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Причина" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hsI-Ai-Xnm">
+                                        <rect key="frame" x="18" y="10" width="144" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="W28-5b-VX9">
+                                        <rect key="frame" x="80" y="55" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="hsI-Ai-Xnm" firstAttribute="centerX" secondItem="URg-Sh-eMp" secondAttribute="centerX" id="3O4-7g-YuV"/>
+                                    <constraint firstAttribute="bottom" secondItem="W28-5b-VX9" secondAttribute="bottom" constant="15" id="AYA-Tq-eGs"/>
+                                    <constraint firstItem="hsI-Ai-Xnm" firstAttribute="top" secondItem="URg-Sh-eMp" secondAttribute="top" constant="10" id="Cnt-Kx-2iN"/>
+                                    <constraint firstItem="hsI-Ai-Xnm" firstAttribute="width" secondItem="URg-Sh-eMp" secondAttribute="width" multiplier="0.8" id="DRB-vJ-tob"/>
+                                    <constraint firstItem="W28-5b-VX9" firstAttribute="centerX" secondItem="URg-Sh-eMp" secondAttribute="centerX" id="Gi8-id-ivl"/>
+                                    <constraint firstAttribute="height" constant="90" id="OwA-EG-oRi"/>
+                                    <constraint firstAttribute="width" constant="180" id="hBn-Xw-fk9"/>
+                                    <constraint firstItem="hsI-Ai-Xnm" firstAttribute="height" secondItem="URg-Sh-eMp" secondAttribute="height" multiplier="0.4" id="x9m-fE-sRU"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="URg-Sh-eMp" firstAttribute="centerX" secondItem="nAd-Ne-Sga" secondAttribute="centerX" id="YHC-vs-Ssv"/>
+                            <constraint firstItem="URg-Sh-eMp" firstAttribute="centerY" secondItem="nAd-Ne-Sga" secondAttribute="centerY" id="gFh-FD-egT"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="HdR-ff-Y4O"/>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="W28-5b-VX9" id="47G-ku-9Tb"/>
+                        <outlet property="loadingView" destination="URg-Sh-eMp" id="rnq-AG-ydW"/>
+                        <outlet property="reasonLabel" destination="hsI-Ai-Xnm" id="XZP-Rd-UUS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F74-iO-x7c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3433" y="-654"/>
+        </scene>
         <!--Диск-->
         <scene sceneID="jTL-Ie-lFu">
             <objects>

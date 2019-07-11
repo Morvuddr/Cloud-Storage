@@ -54,7 +54,7 @@ class YandexClient {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: User.userDidLogoutNotification), object: nil)
     }
     
-    func downloadMetaInfo(at path: String, for parent: Resource?, isCreating: Bool = false, downloadSuccess: @escaping ()->(), downloadFailure: ((String)->())? = nil){
+    func downloadMetaInfo(at path: String, for parent: Resource?, isCreating: Bool = false, isMoving: Bool = false, downloadSuccess: @escaping ()->(), downloadFailure: ((String)->())? = nil){
         let URL = "https://cloud-api.yandex.net/v1/disk/resources"
         request(URL , method: .get,
                 parameters: ["path" : path],
@@ -75,8 +75,8 @@ class YandexClient {
                     let modified = json["modified"].stringValue
                     let resource = Resource(name: name, path: path, type: type, mimeType: mimeType, size: size, created: created, modified: modified, parent: parent)
                     if !isCreating {
-                        if parent == nil {
-                            ResourceFunctions.shared.createResource(resource: resource, parent: nil)
+                        if parent == nil || isMoving {
+                            ResourceFunctions.shared.createResource(resource: resource, parent: parent)
                             parent = resource
                         }
                         
@@ -180,6 +180,74 @@ class YandexClient {
                         print("Something went wrong!")
                     }
                     completion(fileURL)
+                }
+        }
+    }
+    
+    func moveResource(selectedResource: Resource, currentResource: Resource, completion: @escaping ()->()){
+        let url = "https://cloud-api.yandex.net/v1/disk/resources/move"
+        let from = selectedResource.path
+        var path = ""
+        if currentResource.name == "disk"{
+            path = currentResource.path + selectedResource.name
+        } else {
+            path = currentResource.path + "/" + selectedResource.name
+        }
+        
+        request(url, method: .post, parameters: ["from": from, "path": path ], encoding: URLEncoding.queryString, headers: ["Authorization" : User.currentUser!.accessToken!])
+            .validate()
+            .responseJSON { (response) in
+                if response.response?.statusCode == 201 {
+                    
+                    ResourceFunctions.shared.deleteResource(selectedResource: selectedResource, currentResource: currentResource)
+                    self.downloadMetaInfo(at: path, for: currentResource, isCreating: false, isMoving: true, downloadSuccess: {
+                        completion()
+                    })
+                    
+                } else if response.response?.statusCode == 202 {
+                    let json = JSON(response.value!)
+                    let url = json["href"].stringValue
+                    self.checking(url: url, selectedResource: selectedResource, currentResource: currentResource) {
+                        completion()
+                    }
+                } else {
+                    print("Произошла ошибка при запросе на перемещение")
+                }
+            }
+    }
+    func checking(url: String, selectedResource: Resource, currentResource: Resource, completion: @escaping ()->()){
+        
+        var path = ""
+        if currentResource.name == "disk"{
+            path = currentResource.path + selectedResource.name
+        } else {
+            path = currentResource.path + "/" + selectedResource.name
+        }
+        
+        request(url, method: .get, headers: ["Authorization" : User.currentUser!.accessToken!])
+            .validate()
+            .responseJSON { (response) in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+                    let status = json["status"].stringValue
+                    switch status {
+                    case "success":
+                        ResourceFunctions.shared.deleteResource(selectedResource: selectedResource, currentResource: currentResource)
+                        self.downloadMetaInfo(at: path, for: currentResource, isCreating: false, isMoving: true, downloadSuccess: {
+                            completion()
+                        })
+                    case "in-progress":
+                        delay(1.0, closure: {
+                            self.checking(url: url, selectedResource: selectedResource, currentResource: currentResource) {
+                                completion()
+                            }
+                        })
+                    default:
+                        print("Произошла ошибка при проверке перемещения")
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
         }
     }

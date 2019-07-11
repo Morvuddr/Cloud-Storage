@@ -68,4 +68,15 @@ class ResourceFunctions {
         }
     }
     
+    func deleteResource(selectedResource: Resource, currentResource: Resource){
+        deleteChildren(for: selectedResource)
+        do {
+            try realm.write {
+                realm.delete(selectedResource)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
 }

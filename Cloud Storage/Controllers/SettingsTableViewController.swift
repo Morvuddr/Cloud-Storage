@@ -31,6 +31,7 @@ class SettingsTableViewController: UITableViewController {
             let tabBarController = self.tabBarController?.viewControllers![0] as! UINavigationController
             let firstTab = tabBarController.topViewController as! ResourcesCollectionViewController
             firstTab.notificationToken?.invalidate()
+            firstTab.selectedResource = nil
             ResourceFunctions.shared.deleteAll()
             YandexClient.shared.logout()
         }

@@ -16,8 +16,16 @@ class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDe
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet var navBar: UINavigationItem!
     @IBOutlet weak var errorViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var inputButton: UIButton!
     
     var currentResource: Resource?
+    var selectedResource: Resource? {
+        didSet {
+            updateButtons()
+        }
+    }
+    
     var notificationToken: NotificationToken?
     
     override func viewDidLoad() {
@@ -25,6 +33,8 @@ class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDe
         collectionView.delegate = self
         collectionView.dataSource = self
         navigationController?.navigationBar.barTintColor = UIColor.white
+        cancelButton.layer.cornerRadius = cancelButton.frame.height / 2
+        inputButton.layer.cornerRadius = 15
         
         configureConnectionObserver()
         configureResourcesCollectionViewController()
@@ -124,9 +134,10 @@ class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDe
         if Connectivity.isConnectedToInternet{
             for child in currentResource!.children.filter({$0.type == "dir"}) {
                 YandexClient.shared.downloadMetaInfo(at: child.path, for: child, downloadSuccess: {
-                    let currentIndex = self.currentResource!.children.index(of: child)
-                    let lastIndex = self.currentResource!.children.filter({$0.type == "dir"}).count-1
-                    if currentIndex == lastIndex {
+                    let last = self.currentResource!.children.last(where: { (resource) -> Bool in
+                        return resource.type == "dir"
+                    })
+                    if child.name == last!.name {
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ProcessCompleted"), object: nil)
                     }
                 }, downloadFailure: nil)
@@ -178,7 +189,8 @@ class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDe
                 self.downloadResource(resourceName: cell.resource!.name, resourcePath: cell.resource!.path)
             }
             let cutAction = UIAlertAction(title: "Вырезать", style: .default) { (action) in
-                //TODO Cut file
+                //Cut file
+                self.selectResource(resource: cell.resource!)
             }
             let showPropertiesAction = UIAlertAction(title: "Свойства", style: .default) { (action) in
                 // Show resource properties
@@ -243,28 +255,84 @@ class ResourcesCollectionViewController: UIViewController, UIGestureRecognizerDe
     
     func downloadResource(resourceName: String, resourcePath: String) {
         //Download file
-        YandexClient.shared.downloadResource(path: resourcePath, fileName: resourceName){ fileURL in
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ProcessCompleted"), object: nil)
-            let activityVC = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
-            activityVC.excludedActivityTypes = [.airDrop, .postToTwitter, .markupAsPDF, .mail, .message, .postToVimeo, .openInIBooks, .postToFacebook, .copyToPasteboard, .addToReadingList, .assignToContact, .print]
-            activityVC.accessibilityLanguage = "ru"
-            activityVC.completionWithItemsHandler = { (activityType, completed, returnedItems, activityError) in
-                do {
-                    try FileManager.default.removeItem(at: fileURL)
-                } catch (let error) {
-                    print(error)
+        if Connectivity.isConnectedToInternet {
+            YandexClient.shared.downloadResource(path: resourcePath, fileName: resourceName){ fileURL in
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ProcessCompleted"), object: nil)
+                let activityVC = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
+                activityVC.excludedActivityTypes = [.airDrop, .postToTwitter, .markupAsPDF, .mail, .message, .postToVimeo, .openInIBooks, .postToFacebook, .copyToPasteboard, .addToReadingList, .assignToContact, .print]
+                activityVC.accessibilityLanguage = "ru"
+                activityVC.completionWithItemsHandler = { (activityType, completed, returnedItems, activityError) in
+                    do {
+                        try FileManager.default.removeItem(at: fileURL)
+                    } catch (let error) {
+                        print(error)
+                    }
+                    if completed {
+                        self.showAlert(title: "Успех", message: "Файл сохранен.", handler: nil)
+                    } else {
+                        self.showAlert(title: "Отмена действия", message: "Файл удален.", handler: nil)
+                    }
+                }
+                DispatchQueue.main.async {
+                    self.tabBarController?.present(activityVC, animated: true, completion: nil)
                 }
             }
+            
             DispatchQueue.main.async {
-                self.tabBarController?.present(activityVC, animated: true, completion: nil)
+                self.showLoadingView(reason: "Загрузка файла \"\(resourceName)\"...")
             }
-        }
-        
-        DispatchQueue.main.async {
-            self.showLoadingView(reason: "Загрузка файла \"\(resourceName)\"...")
+        } else {
+            showAlert(title: "Отсутствует соединение", message: "Проверьте ваше интернет-соединение и повторите попытку.", handler: nil)
         }
     }
     
+    func selectResource(resource: Resource){
+        self.selectedResource = resource
+    }
+    
+    func updateButtons(){
+        if selectedResource == nil {
+            UIView.animate(withDuration: 0.3) {
+                self.cancelButton.backgroundColor = .white
+                self.cancelButton.isEnabled = false
+                self.inputButton.backgroundColor = .white
+                self.inputButton.isEnabled = false
+            }
+        } else {
+            UIView.animate(withDuration: 0.3) {
+                self.cancelButton.backgroundColor = .red
+                self.cancelButton.isEnabled = true
+                self.inputButton.backgroundColor = .black
+                self.inputButton.isEnabled = true
+            }
+        }
+    }
+    
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        let alert = UIAlertController(title: "Отмена действия", message: "Вы действительно хотите отменить выбор объекта \"\(selectedResource!.name)\"", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
+        let action = UIAlertAction(title: "Да", style: .default) { (UIAlertAction) in
+            self.selectedResource = nil
+        }
+        alert.addAction(cancel)
+        alert.addAction(action)
+        self.tabBarController?.present(alert, animated: true, completion: nil)
+    }
+    @IBAction func inputButtonTapped(_ sender: Any) {
+        if Connectivity.isConnectedToInternet {
+            if !((currentResource?.path.contains(selectedResource!.name))!){
+                YandexClient.shared.moveResource(selectedResource: selectedResource!, currentResource: currentResource!) {
+                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ProcessCompleted"), object: nil)
+                    self.selectedResource = nil
+                }
+                self.showLoadingView(reason: "Идёт синхронизация...")
+            } else {
+                showAlert(title: "Ошибка", message: "Невозможно переместить папку внутрь себя.", handler: nil)
+            }
+        } else {
+            showAlert(title: "Отсутствует соединение", message: "Проверьте ваше интернет-соединение и повторите попытку.", handler: nil)
+        }
+    }
 }
 
 extension ResourcesCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {

@@ -478,6 +478,42 @@
                                     <constraint firstItem="AmF-Sm-Srq" firstAttribute="centerY" secondItem="cat-tP-QEI" secondAttribute="centerY" id="iq2-1V-2oZ"/>
                                 </constraints>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="DNi-nR-Jq0">
+                                <rect key="frame" x="100" y="553" width="175" height="45"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3w5-FK-Fol">
+                                        <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="45" id="Ll3-a1-Uqq"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="X">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancelButtonTapped:" destination="OYE-fr-yXa" eventType="touchUpInside" id="MWx-b8-ZoK"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m4O-Qd-7oL">
+                                        <rect key="frame" x="75" y="0.0" width="100" height="45"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="ZgR-HA-sgz"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Вставить">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="inputButtonTapped:" destination="OYE-fr-yXa" eventType="touchUpInside" id="T86-iM-Qn3"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="K2n-MU-AhH"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -485,6 +521,8 @@
                             <constraint firstItem="UyS-YZ-wEI" firstAttribute="top" secondItem="cat-tP-QEI" secondAttribute="bottom" id="AgH-Ra-FzT"/>
                             <constraint firstItem="cat-tP-QEI" firstAttribute="leading" secondItem="dVb-2T-jON" secondAttribute="leading" id="FGh-su-b6d"/>
                             <constraint firstItem="cat-tP-QEI" firstAttribute="trailing" secondItem="dVb-2T-jON" secondAttribute="trailing" id="Gg4-Fx-E1N"/>
+                            <constraint firstItem="dVb-2T-jON" firstAttribute="bottom" secondItem="DNi-nR-Jq0" secondAttribute="bottom" constant="20" id="Li5-TX-AgZ"/>
+                            <constraint firstItem="DNi-nR-Jq0" firstAttribute="centerX" secondItem="jmW-Pk-tFA" secondAttribute="centerX" id="Ls3-Mt-cDg"/>
                             <constraint firstItem="dVb-2T-jON" firstAttribute="bottom" secondItem="UyS-YZ-wEI" secondAttribute="bottom" id="Tul-K8-kra"/>
                             <constraint firstItem="UyS-YZ-wEI" firstAttribute="top" secondItem="cat-tP-QEI" secondAttribute="bottom" id="ZII-Oi-yx4"/>
                             <constraint firstItem="dVb-2T-jON" firstAttribute="trailing" secondItem="UyS-YZ-wEI" secondAttribute="trailing" id="jcp-xq-lBR"/>
@@ -508,14 +546,16 @@
                     </navigationItem>
                     <connections>
                         <outlet property="backButton" destination="HVC-Lr-VxR" id="Up9-lF-dXj"/>
+                        <outlet property="cancelButton" destination="3w5-FK-Fol" id="tSS-SW-ESc"/>
                         <outlet property="collectionView" destination="UyS-YZ-wEI" id="HzU-Wq-ahI"/>
                         <outlet property="errorViewTopConstraint" destination="9Ib-eF-swr" id="pw6-WR-fSj"/>
+                        <outlet property="inputButton" destination="m4O-Qd-7oL" id="MNn-3o-Dxi"/>
                         <outlet property="navBar" destination="UL4-8h-wlH" id="4nY-ag-VBu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fFB-sd-GNN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2689" y="27"/>
+            <point key="canvasLocation" x="2688.8000000000002" y="26.53673163418291"/>
         </scene>
         <!--Add Resource View Controller-->
         <scene sceneID="NR9-6o-JRk">
